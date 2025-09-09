@@ -1,0 +1,54 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.welcome-title {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.welcome-modes {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.welcome-mode-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-border, #ccc);
+  background-color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.welcome-mode-btn:hover {
+  border-color: var(--color-green, #22c55e);
+}
+
+.welcome-mode-btn.active {
+  background-color: var(--color-green, #22c55e);
+  color: white;
+  border-color: var(--color-green, #22c55e);
+}
+
+.welcome-play {
+  background-color: var(--color-green, #22c55e);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.welcome-play:hover {
+  background-color: var(--color-green-hover, #16a34a);
+}

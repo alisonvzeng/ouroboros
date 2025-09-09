@@ -1,0 +1,20 @@
+.tiles-display-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* gap-2 */
+  justify-content: center;
+}
+
+.tile {
+  width: 2rem; /* w-8 */
+  height: 2rem; /* h-8 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000; /* border default black */
+  border-radius: 0.25rem; /* rounded */
+  background-color: #60a5fa; /* bg-blue-400 */
+  font-weight: bold; /* font-bold */
+  font-size: 1.125rem; /* text-lg */
+  user-select: none; /* select-none */
+}

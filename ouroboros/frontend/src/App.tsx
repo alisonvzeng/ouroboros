@@ -1,14 +1,26 @@
 import { useState } from "react";
 import GamePage from "./pages/GamePage";
-import LetterCircle from "./components/LetterCircle";
+import Welcome from "./components/Welcome";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const [mode, setMode] = useState<"Daily Challenge" | "Endless">(
+    "Daily Challenge"
+  );
 
   return (
     <div>
-      <GamePage />
+      {!started ? (
+        <Welcome
+          modes={["Daily Challenge", "Endless"]}
+          selectedMode={mode}
+          setMode={setMode}
+          onPlay={() => setStarted(true)}
+        />
+      ) : (
+        <GamePage mode={mode} setMode={setMode} />
+      )}
     </div>
   );
 }

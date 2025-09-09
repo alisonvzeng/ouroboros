@@ -1,5 +1,6 @@
 import React from "react";
 import type { TilePool } from "../utils/tiles";
+import "../styles/TilesLeft.css";
 
 interface TilesLeftProps {
   tileBag: TilePool;
@@ -21,11 +22,11 @@ const TilesLeft: React.FC<TilesLeftProps> = ({ tileBag }) => {
   const totalTiles = totalVowels + totalConsonants;
 
   return (
-    <div className="text-center mb-4">
-      <p className="font-semibold">Tiles Left: {totalTiles}</p>
+    <div className="tiles-left-container">
+      <p className="tiles-left-total">Tiles Left: {totalTiles}</p>
       <p>
-        <span className="text-blue-500 font-bold">Vowels: {totalVowels}</span> |{" "}
-        <span className="text-green-500 font-bold">
+        <span className="tiles-left-vowels">Vowels: {totalVowels}</span> |{" "}
+        <span className="tiles-left-consonants">
           Consonants: {totalConsonants}
         </span>
       </p>

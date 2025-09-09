@@ -1,29 +1,42 @@
 import { useState } from "react";
 import { useGameLogic } from "../hooks/useGameLogic";
-import LetterCircle from "../components/LetterCircle";
 import TilesDisplay from "../components/TilesDisplay";
 import TilesLeft from "../components/TilesLeft";
 import Timer from "../components/Timer";
 import Snake from "../components/Snake";
 import GameSummary from "../components/GameSummary";
+import PlayedWords from "../components/PlayedWords";
+import { submitWord } from "../utils/submitWord";
+import "../styles/GamePage.css";
 
-export default function GamePage() {
+interface GamePageProps {
+  mode: "Daily Challenge" | "Endless";
+  setMode: React.Dispatch<React.SetStateAction<"Daily Challenge" | "Endless">>;
+}
+
+export default function GamePage({ mode, setMode }: GamePageProps) {
   const {
     chain,
+    setChain,
     score,
+    setScore,
     tiles,
-    submitWord,
+    setTiles,
     feedback,
+    setFeedback,
+    values,
     drawTilesByType,
     alphabetizeTiles,
     randomizeTiles,
     updateMode,
     tileBag,
+    setTileBag,
     lettersVisible,
     setLettersVisible,
     playedWords,
+    setPlayedWords,
     restartGame,
-  } = useGameLogic();
+  } = useGameLogic(mode, setMode);
 
   const [word, setWord] = useState("");
   const [input, setInput] = useState("");
@@ -32,7 +45,22 @@ export default function GamePage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const success = await submitWord(input);
+    const success = await submitWord(
+      input,
+      setFeedback,
+      chain,
+      setChain,
+      tiles,
+      setTiles,
+      score,
+      setScore,
+      values,
+      playedWords,
+      setPlayedWords,
+      setLettersVisible,
+      tileBag,
+      setTileBag
+    );
     if (success) {
       setWord(input);
       setInput("");
@@ -40,55 +68,62 @@ export default function GamePage() {
   }
 
   return (
-    <div className="p-4 h-screen flex flex-col">
-      <h1 className="text-2xl font-bold mb-4 text-center">Ouroboros</h1>
+    <div className="game-page">
+      <h1 className="game-title">Ouroboros</h1>
+
       {/* Mode Selector */}
-      <div className="mb-4">
-        <label className="mr-2 font-semibold">Mode:</label>
+      {/* <div className="mode-selector">
+        <label className="mode-label">Mode:</label>
         <select
           onChange={(e) => {
             setResetCounter((prev) => prev + 1);
-            updateMode(e.target.value as "daily" | "endless");
+            updateMode(e.target.value as "Daily Challenge" | "Endless");
           }}
-          className="border px-2 py-1 rounded"
+          className="mode-dropdown"
         >
-          <option value="daily">Daily Puzzle</option>
-          <option value="endless">Endless</option>
+          <option value="Daily Challenge">Daily Challenge</option>
+          <option value="Endless">Endless</option>
         </select>
-      </div>
+      </div> */}
 
-      <p className="mb-4">Score: {score}</p>
+      <p className="score">Score: {score}</p>
       <Timer resetTrigger={resetCounter} />
 
       {/* Centered Panes */}
-      <div className="flex gap-8 ">
+      <div className="panes">
         {/* Left Pane */}
-        <div className="flex flex-col gap-4 w-64">
+        <div className="pane">
           <TilesDisplay tiles={tiles} />
           <TilesLeft tileBag={tileBag} />
 
           <div className="flex flex-col gap-2">
             <button
-              onClick={() => drawTilesByType(2, "vowel")}
-              className="bg-blue-500 text-white px-3 py-1 rounded"
+              onClick={() => {
+                drawTilesByType(2, "vowel", setTileBag, setTiles);
+                setScore((s) => s - 2);
+              }}
+              className="btn btn-vowel"
             >
               Draw Vowel
             </button>
             <button
-              onClick={() => drawTilesByType(2, "consonant")}
-              className="bg-green-500 text-white px-3 py-1 rounded"
+              onClick={() => {
+                drawTilesByType(2, "consonant", setTileBag, setTiles);
+                setScore((s) => s - 2);
+              }}
+              className="btn btn-consonant"
             >
               Draw Consonant
             </button>
             <button
-              className="bg-yellow-500 text-white px-3 py-1 rounded"
-              onClick={alphabetizeTiles}
+              className="btn btn-alphabetize"
+              onClick={() => alphabetizeTiles(setTiles)}
             >
               Alphabetize
             </button>
             <button
-              className="bg-purple-500 text-white px-3 py-1 rounded"
-              onClick={randomizeTiles}
+              className="btn btn-randomize"
+              onClick={() => randomizeTiles(setTiles)}
             >
               Randomize
             </button>
@@ -96,7 +131,7 @@ export default function GamePage() {
         </div>
 
         {/* Middle Pane */}
-        <div className="flex flex-col items-center">
+        <div className="middle-pane">
           <Snake
             letters={chain}
             word={word}
@@ -104,34 +139,25 @@ export default function GamePage() {
             setLettersVisible={setLettersVisible}
           />
 
-          <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2">
+          <form onSubmit={handleSubmit} className="word-form">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="border px-2 py-1 rounded"
+              className="word-input"
             />
-            <button className="bg-green-500 text-white px-3 py-1 rounded">
-              Submit
-            </button>
-            {feedback && <p className="text-red-600">{feedback}</p>}
+            <button className="btn btn-consonant">Submit</button>
+            {feedback && <p className="feedback">{feedback}</p>}
           </form>
         </div>
 
         {/* Right Pane */}
-        <div className="flex flex-col gap-4 w-64">
+        <div className="pane">
           <p className="text-lg font-semibold">Score: {score}</p>
-          <div className="flex-1 overflow-y-auto border rounded p-2 h-80">
-            <h3 className="font-semibold mb-2">Played Words</h3>
-            <ul>
-              {playedWords.map((w, i) => (
-                <li key={i}>{w}</li>
-              ))}
-            </ul>
+          <div className="played-words-container">
+            <h3 className="played-words-title">Played Words</h3>
+            <PlayedWords words={playedWords} />
           </div>
-          <button
-            onClick={() => setGameOver(true)}
-            className="bg-red-500 text-white px-3 py-1 rounded"
-          >
+          <button onClick={() => setGameOver(true)} className="btn btn-end">
             End Game
           </button>
         </div>
