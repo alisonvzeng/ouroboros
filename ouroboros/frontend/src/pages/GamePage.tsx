@@ -12,9 +12,18 @@ import "../styles/GamePage.css";
 interface GamePageProps {
   mode: "Daily Challenge" | "Endless";
   setMode: React.Dispatch<React.SetStateAction<"Daily Challenge" | "Endless">>;
+  setStarted: React.Dispatch<React.SetStateAction<boolean>>;
+  seed: number;
+  uid?: string; // Optional uid prop for future use
 }
 
-export default function GamePage({ mode, setMode }: GamePageProps) {
+export default function GamePage({
+  mode,
+  setMode,
+  setStarted,
+  seed,
+  uid,
+}: GamePageProps) {
   const {
     chain,
     setChain,
@@ -36,7 +45,7 @@ export default function GamePage({ mode, setMode }: GamePageProps) {
     playedWords,
     setPlayedWords,
     restartGame,
-  } = useGameLogic(mode, setMode);
+  } = useGameLogic(mode, setMode, seed, setStarted);
 
   const [word, setWord] = useState("");
   const [input, setInput] = useState("");
@@ -71,27 +80,10 @@ export default function GamePage({ mode, setMode }: GamePageProps) {
     <div className="game-page">
       <h1 className="game-title">Ouroboros</h1>
 
-      {/* Mode Selector */}
-      {/* <div className="mode-selector">
-        <label className="mode-label">Mode:</label>
-        <select
-          onChange={(e) => {
-            setResetCounter((prev) => prev + 1);
-            updateMode(e.target.value as "Daily Challenge" | "Endless");
-          }}
-          className="mode-dropdown"
-        >
-          <option value="Daily Challenge">Daily Challenge</option>
-          <option value="Endless">Endless</option>
-        </select>
-      </div> */}
-
       <p className="score">Score: {score}</p>
       <Timer resetTrigger={resetCounter} />
 
-      {/* Centered Panes */}
       <div className="panes">
-        {/* Left Pane */}
         <div className="pane">
           <TilesDisplay tiles={tiles} />
           <TilesLeft tileBag={tileBag} />
@@ -130,7 +122,6 @@ export default function GamePage({ mode, setMode }: GamePageProps) {
           </div>
         </div>
 
-        {/* Middle Pane */}
         <div className="middle-pane">
           <Snake
             letters={chain}
@@ -150,7 +141,6 @@ export default function GamePage({ mode, setMode }: GamePageProps) {
           </form>
         </div>
 
-        {/* Right Pane */}
         <div className="pane">
           <p className="text-lg font-semibold">Score: {score}</p>
           <div className="played-words-container">
@@ -163,13 +153,12 @@ export default function GamePage({ mode, setMode }: GamePageProps) {
         </div>
       </div>
 
-      {/* Game Summary */}
       {gameOver && (
         <GameSummary
           score={score}
           playedWords={playedWords}
           onRestart={() => {
-            restartGame();
+            restartGame(mode, setStarted);
             setGameOver(false);
           }}
           leftoverTiles={Object.values(tiles).reduce((a, b) => a + b, 0)}

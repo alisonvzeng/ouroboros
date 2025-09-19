@@ -6,78 +6,78 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem; /* p-6 */
+  padding: 1.5rem; 
 }
 
 .game-summary-container {
-  background-color: white;
-  border-radius: 1rem; /* rounded-xl */
+  background-color: rgb(75, 72, 72);
+  border-radius: 1rem; 
   padding: 1.5rem;
   width: 100%;
-  max-width: 28rem; /* max-w-md */
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); /* shadow-lg */
+  max-width: 28rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .game-summary-title {
-  font-size: 1.5rem; /* text-2xl */
-  font-weight: 700; /* font-bold */
-  margin-bottom: 1rem; /* mb-4 */
-  color: black;
+  font-size: 1.5rem; 
+  font-weight: 700; 
+  margin-bottom: 1rem;
+  color: rgb(255, 255, 255);
 }
 
 .game-summary-text {
-  font-size: 1.125rem; /* text-lg */
-  margin-bottom: 1rem; /* mb-4 */
-  color: black;
+  font-size: 1.125rem; 
+  margin-bottom: 1rem; 
+  color: rgb(255, 255, 255);
 }
 
 .game-summary-mono {
-  font-family: monospace; /* font-mono */
+  font-family: monospace; 
 }
 
 .words-played-section {
   width: 100%;
-  margin-bottom: 1rem; /* mb-4 */
+  margin-bottom: 1rem; 
 }
 
 .words-played-title {
-  font-size: 1.125rem; /* text-lg */
-  font-weight: 600; /* font-semibold */
-  margin-bottom: 0.5rem; /* mb-2 */
-  color: black;
+  font-size: 1.125rem; 
+  font-weight: 600;
+  margin-bottom: 0.5rem; 
+  color: rgb(255, 255, 255);
 }
 
 .words-played-list {
-  max-height: 12rem; /* max-h-48 */
+  max-height: 12rem; 
   overflow-y: auto;
-  border: 1px solid #e5e7eb; /* border */
-  border-radius: 0.25rem; /* rounded */
-  padding: 0.5rem; /* p-2 */
+  border: 1px solid #e5e7eb; 
+  border-radius: 0.25rem; 
+  padding: 0.5rem; 
 }
 
 .words-played-item {
-  color: #1f2937; /* text-gray-800 */
+  color: #fcfcfc; 
 }
 
 .words-played-empty {
-  color: #6b7280; /* text-gray-500 */
+  color: #6b7280; 
   font-style: italic;
 }
 
 .restart-button {
-  margin-top: 1rem; /* mt-4 */
-  background-color: #3b82f6; /* bg-blue-500 */
+  margin-top: 1rem; 
+  background-color: #3b82f6; 
   color: white;
-  font-weight: 600; /* font-semibold */
-  padding: 0.5rem 1rem; /* py-2 px-4 */
-  border-radius: 0.25rem; /* rounded */
+  font-weight: 600;
+  padding: 0.5rem 1rem; 
+  border-radius: 0.25rem; 
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .restart-button:hover {
-  background-color: #2563eb; /* hover:bg-blue-600 */
+  background-color: #2563eb; 
 }

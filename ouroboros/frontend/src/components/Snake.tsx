@@ -73,10 +73,9 @@ export default function Snake({
         viewBox={`0 0 ${svgSize} ${svgSize}`}
       >
         <g transform={`translate(${offsetX}, ${offsetY})`}>
-          {/* Body */}
+
 
           <g id="bodyGroup">
-            {/* Copy your 20 paths from snake-body.svg here as <path> or <g> */}
             <svg
               width="371"
               height="368"
@@ -259,7 +258,7 @@ export default function Snake({
             </svg>
           </g>
 
-          {/* Letters */}
+
           <g
             id="lettersGroup"
             style={{
@@ -289,7 +288,7 @@ export default function Snake({
             })}
           </g>
 
-          {/* Head */}
+
           <g
             id="headGroup"
             style={{ transition: "transform 1s ease" }}

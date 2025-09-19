@@ -12,7 +12,7 @@ const Timer = ({ resetTrigger }: TimerProps) => {
       setSeconds((prev) => prev + 1);
     }, 1000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval); 
   }, []);
 
   useEffect(() => {
@@ -31,7 +31,6 @@ const Timer = ({ resetTrigger }: TimerProps) => {
   return (
     <div>
       <h2>⏱ Time: {formatTime(seconds)}</h2>
-      {/* rest of your UI */}
     </div>
   );
 };

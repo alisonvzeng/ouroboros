@@ -1,18 +1,18 @@
 .tiles-left-container {
-  text-align: center; /* text-center */
-  margin-bottom: 1rem; /* mb-4 */
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .tiles-left-total {
-  font-weight: 600; /* font-semibold */
+  font-weight: 600;
 }
 
 .tiles-left-vowels {
-  color: #3b82f6; /* text-blue-500 */
-  font-weight: bold; /* font-bold */
+  color: #3b82f6;
+  font-weight: bold;
 }
 
 .tiles-left-consonants {
-  color: #22c55e; /* text-green-500 */
-  font-weight: bold; /* font-bold */
+  color: #22c55e;
+  font-weight: bold;
 }
