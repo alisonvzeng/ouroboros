@@ -8,6 +8,7 @@ interface TilesDisplayProps {
 
 const TilesDisplay: React.FC<TilesDisplayProps> = ({ tiles }) => {
   return (
+    
     <div className="tiles-display-container">
       {Object.entries(tiles).map(([letter, count]) =>
         Array.from({ length: count }).map((_, i) => (

@@ -44,7 +44,7 @@ export default function GamePage({
     setLettersVisible,
     playedWords,
     setPlayedWords,
-    restartGame,
+    resetGame,
   } = useGameLogic(mode, setMode, seed, setStarted);
 
   const [word, setWord] = useState("");
@@ -158,7 +158,23 @@ export default function GamePage({
           score={score}
           playedWords={playedWords}
           onRestart={() => {
-            restartGame(mode, setStarted);
+            resetGame({
+              mode,
+              seed,
+              setStarted,
+              tileBag,
+              setTileBag,
+              tiles,
+              setTiles,
+              chain,
+              setChain,
+              score,
+              setScore,
+              setFeedback,
+              playedWords,
+              setPlayedWords,
+              setLettersVisible,
+            });
             setGameOver(false);
           }}
           leftoverTiles={Object.values(tiles).reduce((a, b) => a + b, 0)}

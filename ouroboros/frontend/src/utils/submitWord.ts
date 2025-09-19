@@ -62,7 +62,7 @@ export async function submitWord(
   setChain(newChain);
   const newScore = score + calculateScore(word, newChain, values);
   setScore(newScore);
-  setTiles(removeUsedLetters(word, tiles, currentChainStr));
+  let newTiles = removeUsedLetters(word, tiles, currentChainStr);
   const newlyPlayedWords = [...playedWords, word];
   setPlayedWords(newlyPlayedWords);
 
@@ -77,13 +77,16 @@ export async function submitWord(
     newBag[letter]--;
 
     // Add to tiles
-    const newTiles = {
-      ...tiles,
-      [letter]: (tiles[letter] || 0) + 1,
+    newTiles = {
+      ...newTiles, // spread current newTiles
+      [letter]: (newTiles[letter] || 0) + 1, // update/add the new letter
     };
-    setTiles(newTiles);
+
+    console.log("drawing letter", letter);
+
     setScore(score - 1); // Penalty for drawing a tile
   }
+  setTiles(newTiles);
 
   console.log(
     "Total tiles left in bag:",

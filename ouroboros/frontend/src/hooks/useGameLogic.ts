@@ -13,6 +13,7 @@ import {
 import { isValidWord } from "../utils/validWord";
 import type { TilePool } from "../utils/tiles";
 import { submitWord } from "../utils/submitWord";
+import { resetGame } from "../utils/resetGame";
 import {
   initialTileBag,
   alphabetizeTiles,
@@ -28,7 +29,9 @@ const VOWELS = new Set(["A", "E", "I", "O", "U"]);
 
 export function useGameLogic(
   mode: "Daily Challenge" | "Endless",
-  setMode: React.Dispatch<React.SetStateAction<"Daily Challenge" | "Endless">>
+  setMode: React.Dispatch<React.SetStateAction<"Daily Challenge" | "Endless">>,
+  seed: number,
+  setStarted: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const { tileBag: generatedTileBag, tiles: generatedTiles } = initialTileBag(
     mode,
@@ -48,23 +51,6 @@ export function useGameLogic(
     throw new Error("Invalid letter values data");
   }
   const values = parsedValues.data;
-
-  function restartGame() {
-    setTileBag(
-      mode === "Daily Challenge"
-        ? generateTileBag(50, seed)
-        : generateTileBag(200)
-    );
-    setTiles(
-      mode === "Daily Challenge"
-        ? generateTilesByFrequency(10, seed)
-        : generateTilesByFrequency(10)
-    );
-    setChain([]);
-    setScore(0);
-    setFeedback("");
-    setPlayedWords([]);
-  }
 
   function updateMode(newMode: "Daily Challenge" | "Endless") {
     if (newMode === mode) return;
@@ -102,6 +88,6 @@ export function useGameLogic(
     setLettersVisible,
     playedWords,
     setPlayedWords,
-    restartGame,
+    resetGame,
   };
 }

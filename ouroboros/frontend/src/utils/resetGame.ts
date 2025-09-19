@@ -1,8 +1,10 @@
 import { set } from "zod";
 import type { TilePool } from "./tiles";
+import { generateTileBag, generateTilesByFrequency } from "./tiles";
 
 interface resetGameProps {
   mode: "Daily Challenge" | "Endless";
+  seed: number;
   setStarted: React.Dispatch<React.SetStateAction<boolean>>;
   tileBag: TilePool;
   setTileBag: React.Dispatch<React.SetStateAction<TilePool>>;
@@ -27,32 +29,33 @@ async function submitGameData(gameData: any) {
 
   const result = await response.json();
   console.log(result);
-  // try {
-  //   const response = await fetch("http://localhost:4000/api/submit-game-data", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(gameData),
-  //   });
+  try {
+    const response = await fetch("http://localhost:4000/api/submit-game-data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gameData),
+    });
 
-  //   console.log("Response status:", response.status);
-  //   const result = await response.json();
-  //   console.log("Raw response:", result);
+    console.log("Response status:", response.status);
+    const result = await response.json();
+    console.log("Raw response:", result);
 
-  //   if (!result.success) {
-  //     throw new Error(result.error || "Failed to submit game data");
-  //   }
-  //   console.log("Game data saved with ID:", result.id);
-  //   return result;
-  // } catch (err: any) {
-  //   console.error("Error submitting game data:", err.message);
-  //   throw err;
-  // }
+    if (!result.success) {
+      throw new Error(result.error || "Failed to submit game data");
+    }
+    console.log("Game data saved with ID:", result.id);
+    return result;
+  } catch (err: any) {
+    console.error("Error submitting game data:", err.message);
+    throw err;
+  }
 }
 
 export async function resetGame({
   mode,
+  seed,
   setStarted,
   tileBag,
   setTileBag,
@@ -80,6 +83,17 @@ export async function resetGame({
   } catch (error) {
     console.error("Error saving game state:", error);
   }
+
+  setTileBag(
+    mode === "Daily Challenge"
+      ? generateTileBag(50, seed)
+      : generateTileBag(200)
+  );
+  setTiles(
+    mode === "Daily Challenge"
+      ? generateTilesByFrequency(10, seed)
+      : generateTilesByFrequency(10)
+  );
 
   // return to welcome screen
   setTileBag({});
